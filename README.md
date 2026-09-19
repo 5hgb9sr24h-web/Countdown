@@ -1,0 +1,39 @@
+# Countdown
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Countdown</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:#f2f1ee;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-content:center;color:#3f3f3c}
+.row{display:flex;align-items:flex-start;justify-content:center;gap:3.5rem}
+.unit .num{font-size:4.5rem;font-weight:700;letter-spacing:.15em;line-height:1;color:#3f3f3c;font-variant-numeric:tabular-nums}
+.unit .lab{margin-top:.6rem;font-size:1rem;letter-spacing:.45em;color:#6b6b66;text-transform:uppercase;padding-left:.45em}
+@media(max-width:520px){.row{gap:1.8rem}.unit .num{font-size:3rem}.unit .lab{font-size:.75rem;letter-spacing:.3em}}
+</style>
+</head>
+<body>
+<div class="row" id="r"></div>
+<script>
+var target=new Date(2027,4,31,0,0,0);
+function pad(n){return n<10?"0"+n:""+n}
+function calc(){
+ var now=new Date();var ms=target-now;if(ms<0)ms=0;
+ var days=Math.floor(ms/86400000);
+ var months=Math.floor(days/30.4375);
+ var rem=days-Math.round(months*30.4375);if(rem<0)rem=0;
+ var weeks=Math.floor(rem/7);var d=rem-weeks*7;
+ return[["MONTHS",months],["WEEKS",weeks],["DAYS",d]];
+}
+function render(){
+ var p=calc(),h="";
+ for(var i=0;i<p.length;i++){h+='<div class="unit"><div class="num">'+pad(p[i][1])+'</div><div class="lab">'+p[i][0]+'</div></div>'}
+ document.getElementById("r").innerHTML=h;
+}
+render();setInterval(render,3600000);
+</script>
+</body>
+</html>
